@@ -5,10 +5,16 @@ import App from "./App";
 // import * as serviceWorker from './serviceWorker';
 import { createStore } from "redux";
 import rootReducer from "./redux/rootReducer.js";
-import boardsReducer from "./redux/boards/boardsReducer";
 import { Provider } from "react-redux";
+import { loadState, saveState } from "./localStorage";
 
-const store = createStore(rootReducer);
+const persistedState = loadState();
+
+const store = createStore(rootReducer, persistedState);
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
 
 ReactDOM.render(
   <Provider store={store}>

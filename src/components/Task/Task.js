@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
 import Comment from "./Comment.js";
-// Modal.setAppElement("#root");
+import { connect } from "react-redux";
+import { addComment } from "../../redux/comments/commentsActions";
+import { selectComments } from "../../redux/selectors";
 
 class Task extends Component {
   constructor(props) {
@@ -9,8 +11,8 @@ class Task extends Component {
     this.state = {
       showTaskModal: props.showTaskModal,
       task: props.task,
-      inputComment: "",
-      comments: props.task.comments
+      inputComment: ""
+      //   comments: props.task.comments
     };
     this.saveComment = this.saveComment.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -23,15 +25,14 @@ class Task extends Component {
   };
 
   saveComment = () => {
-    let comments = this.state.comments;
     let newComment = {
-      id: Math.round(Math.random()),
+      id: Math.round(Math.random() * 1000),
+      task_id: this.state.task.id,
       text: this.state.inputComment,
       user: "Rohit"
     };
-    comments.unshift(newComment);
+    this.props.addComment(newComment);
     this.setState({
-      comments,
       inputComment: ""
     });
   };
@@ -85,7 +86,7 @@ class Task extends Component {
           </div>
         </div>
         <div style={{ display: "block" }}>
-          {this.state.comments.map(comment => (
+          {this.props.comments.map(comment => (
             <Comment key={comment.id} comment={comment} />
           ))}
         </div>
@@ -94,4 +95,14 @@ class Task extends Component {
   }
 }
 
-export default Task;
+const mapStateToProps = (state, props) => {
+  return {
+    comments: selectComments(state, props)
+  };
+};
+
+const mapDispatchToProps = {
+  addComment
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Task);

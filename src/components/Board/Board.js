@@ -2,16 +2,17 @@ import React, { Component } from "react";
 import TaskItem from "./TaskItem";
 import NewTask from "./NewTask";
 import { connect } from "react-redux";
+import { selectBoard, selectTasks } from "../../redux/selectors";
 
 class Board extends Component {
   constructor(props) {
     super(props);
     this.id = this.props.match.params.id;
     this.state = {
-      board: this.props.boards.find(board => board.id === Number(this.id)),
-      tasks: this.props.tasks.filter(
-        task => Number(task.board_id) === Number(this.id)
-      ),
+      //   board: this.props.boards.find(board => board.id === Number(this.id)),
+      //   tasks: this.props.tasks.filter(
+      //     task => Number(task.board_id) === Number(this.id)
+      //   ),
       showNewTask: false
     };
     this.toggleNewTask = this.toggleNewTask.bind(this);
@@ -33,7 +34,7 @@ class Board extends Component {
       >
         <div style={{ display: "flex", width: "100%", position: "relative" }}>
           <div style={{ float: "left" }}>
-            <h2>{this.state.board.name}</h2>
+            <h2>{this.props.board.name}</h2>
           </div>
           <div
             style={{
@@ -54,14 +55,14 @@ class Board extends Component {
           </div>
         </div>
         <hr />
-        {this.state.tasks.map(task => (
+        {this.props.tasks.map(task => (
           <TaskItem key={task.id} task={task} />
         ))}
         {this.state.showNewTask && (
           <NewTask
             showNewTask={this.state.showNewTask}
             toggleNewTask={this.toggleNewTask}
-            board_id={this.id}
+            board_id={this.props.board.id}
           />
         )}
       </div>
@@ -69,10 +70,11 @@ class Board extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
+  let boardId = props.match.params.id;
   return {
-    boards: state.boards,
-    tasks: state.tasks
+    board: selectBoard(state, boardId),
+    tasks: selectTasks(state, boardId)
   };
 };
 

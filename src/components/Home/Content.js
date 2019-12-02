@@ -3,13 +3,6 @@ import BoardListItem from "./BoardListItem";
 import { connect } from "react-redux";
 
 class Content extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {
-    //   boards: props.boards
-    // };
-  }
-
   render() {
     return (
       <div className="container">

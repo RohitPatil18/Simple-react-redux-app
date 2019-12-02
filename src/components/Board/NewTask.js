@@ -11,7 +11,6 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    transition: "-webkit-transform 0.3s ease-out",
     transition: "transform 0.3s ease-out",
     width: "50%"
   },
@@ -36,7 +35,7 @@ class NewTask extends Component {
 
   handleSubmit = () => {
     let newTask = {
-      id: Math.round(Math.random()),
+      id: Math.round(Math.random() * 1000),
       board_id: this.props.board_id,
       name: this.state.inputValue
     };

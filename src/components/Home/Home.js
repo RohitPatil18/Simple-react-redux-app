@@ -5,14 +5,14 @@ import Header from "./Header";
 // var boards = JSON.parse(localStorage.getItem("data"));
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {
-    //   boardsData: boards
-    // };
-    // this.nextID = boards.length + 1;
-    // this.createNewBoard = this.createNewBoard.bind(this);
-  }
+  //   constructor(props) {
+  //     super(props);
+  // this.state = {
+  //   boardsData: boards
+  // };
+  // this.nextID = boards.length + 1;
+  // this.createNewBoard = this.createNewBoard.bind(this);
+  //   }
 
   //   createNewBoard = newBoardName => {
   //     let boardsData = this.state.boardsData;
